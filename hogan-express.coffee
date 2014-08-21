@@ -8,6 +8,18 @@ $ extends require 'util'
 $ extends require 'path'
 hogan = require 'hogan.js'
 
+extend = (dest, src...) ->
+  for src in src
+    for own k, v of src
+      if isObj(v)
+        dest[k] = extend({}, src[k])
+      else
+        dest[k] = v
+  return dest # Don't leave implicit - returns result of comprehension
+
+isObj = (obj) ->
+  obj.toString() == '[object Object]'
+
 cache = {}
 ctx = {}
 
@@ -58,13 +70,10 @@ customContent = (str, tag, opt, partials) ->
 render = (path, opt, fn) ->
   ctx = this
   partials = opt.settings.partials or {}
-  partials = partials extends opt.partials if opt.partials
+  partials = extend(partials, opt.partials) if opt.partials
 
   lambdas = opt.settings.lambdas or {}
-  lambdas = lambdas extends opt.lambdas if opt.lambdas
-  # get rid of junk from "extends" - make it a normal object again
-  delete lambdas['prototype']
-  delete lambdas['__super__']
+  lambdas = extend(lambdas, opt.lambdas) if opt.lambdas
 
   # create the lambdafied functions
   # this way of dealing with lambdas assumes you'll want
