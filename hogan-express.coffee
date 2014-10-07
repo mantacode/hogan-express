@@ -8,8 +8,8 @@ $ extends require 'util'
 $ extends require 'path'
 hogan = require 'hogan.js'
 
-extend = (dest, src...) ->
-  for src in src
+extend = (dest, srcs...) ->
+  for src in srcs
     for own k, v of src
       if isObj(v)
         dest[k] = extend({}, src[k])
