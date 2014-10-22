@@ -133,7 +133,7 @@
           }
           lctx = __extends(lctx, lcontext);
           opt.lambdaVals[name][lambdaIndexes[name]] = lambda(hogan.compile(text).render(lctx));
-          rtmpl = "{{ lambdaVals." + name + "." + lambdaIndexes[name] + " }} ";
+          rtmpl = "{{ lambdaVals." + name + "." + lambdaIndexes[name] + " }}";
           lambdaIndexes[name] = lambdaIndexes[name] + 1;
           return rtmpl;
         };
