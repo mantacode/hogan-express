@@ -117,22 +117,26 @@
     delete lambdas['prototype'];
     delete lambdas['__super__'];
     opt.lambdas = {};
-    opt.lambdaVals = {};
     lambdaIndexes = {};
     _fn = function(name, lambda) {
-      opt.lambdaVals[name] = {};
       lambdaIndexes[name] = 0;
       return opt.lambdas[name] = function() {
         var lcontext;
         lcontext = this;
         return function(text) {
           var lctx, rtmpl;
+          if (lcontext.lambdaVals == null) {
+            lcontext.lambdaVals = {};
+          }
+          if (lcontext.lambdaVals[name] == null) {
+            lcontext.lambdaVals[name] = {};
+          }
           lctx = {};
           if (opt._locals) {
             lctx = __extends(lctx, opt._locals);
           }
           lctx = __extends(lctx, lcontext);
-          opt.lambdaVals[name][lambdaIndexes[name]] = lambda(hogan.compile(text).render(lctx));
+          lcontext.lambdaVals[name][lambdaIndexes[name]] = lambda(hogan.compile(text).render(lctx));
           rtmpl = "{{ lambdaVals." + name + "." + lambdaIndexes[name] + " }}";
           lambdaIndexes[name] = lambdaIndexes[name] + 1;
           return rtmpl;
