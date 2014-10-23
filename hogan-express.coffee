@@ -81,6 +81,9 @@ render = (path, opt, fn) ->
           if (! lcontext.lambdaVals?) then lcontext.lambdaVals = {}
           if (! lcontext.lambdaVals[name]?) then lcontext.lambdaVals[name] = {}
 
+          # getting the context right here is important
+          # it must account for "locals" and values in the current context
+
           #  ... particually interesting when applying within a list
           lctx= {}
           lctx = lctx extends opt._locals if opt._locals
