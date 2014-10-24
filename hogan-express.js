@@ -5,7 +5,7 @@
  */
 
 (function() {
-  var $, cache, ctx, customContent, hogan, read, render, renderLayout, renderPartials,
+  var $, cache, ctx, customContent, hogan, read, render, renderLayout, renderPartials, unescape,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -103,6 +103,10 @@
     return hogan.compile(text, opt).render(opt, partials);
   };
 
+  unescape = function(t) {
+    return t.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&#39;/g, "'").replace(/&quot;/g, '"');
+  };
+
   render = function(path, opt, fn) {
     var lambda, lambdaIndexes, lambdas, name, partials, _fn;
     ctx = this;
@@ -136,7 +140,7 @@
             lctx = __extends(lctx, opt._locals);
           }
           lctx = __extends(lctx, lcontext);
-          lcontext.lambdaVals[name][lambdaIndexes[name]] = lambda(hogan.compile(text).render(lctx));
+          lcontext.lambdaVals[name][lambdaIndexes[name]] = unescape(lambda(hogan.compile(text).render(lctx)));
           rtmpl = "{{ lambdaVals." + name + "." + lambdaIndexes[name] + " }}";
           lambdaIndexes[name] = lambdaIndexes[name] + 1;
           return rtmpl;
