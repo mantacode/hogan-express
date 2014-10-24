@@ -55,13 +55,6 @@ customContent = (str, tag, opt, partials) ->
   text = str.substring(str.indexOf(oTag) + oTag.length, str.indexOf(cTag))
   hogan.compile(text, opt).render(opt, partials)
 
-unescape = (t) ->
-  t.replace(/&amp;/g, '&')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&#39;/g, "'")
-    .replace(/&quot;/g, '"')
-
 render = (path, opt, fn) ->
   ctx = this
   partials = opt.settings.partials or {}
@@ -95,8 +88,8 @@ render = (path, opt, fn) ->
           lctx = lctx extends opt._locals if opt._locals
           lctx = lctx extends lcontext
           
-          lcontext.lambdaVals[name][lambdaIndexes[name]] = unescape(lambda(hogan.compile(text).render(lctx)))
-          rtmpl = "{{ lambdaVals." + name + "." + lambdaIndexes[name] + " }}"
+          lcontext.lambdaVals[name][lambdaIndexes[name]] = lambda(hogan.compile(text).render(lctx))
+          rtmpl = "{{{ lambdaVals." + name + "." + lambdaIndexes[name] + " }}}"
           lambdaIndexes[name] = lambdaIndexes[name] + 1
           return rtmpl
 
