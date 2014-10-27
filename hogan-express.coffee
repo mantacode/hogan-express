@@ -71,18 +71,27 @@ render = (path, opt, fn) ->
   # to call your function on the rendered content instead
   # of the original template string
   opt.lambdas = {}
+  lambdaIndexes = {}
   for name, lambda of lambdas
     do (name, lambda) ->
+      lambdaIndexes[name] = 0
       opt.lambdas[name] = ->
         lcontext = @
         return (text) ->
+          if (! lcontext.lambdaVals?) then lcontext.lambdaVals = {}
+          if (! lcontext.lambdaVals[name]?) then lcontext.lambdaVals[name] = {}
+
           # getting the context right here is important
           # it must account for "locals" and values in the current context
           #  ... particually interesting when applying within a list
           lctx= {}
           lctx = lctx extends opt._locals if opt._locals
           lctx = lctx extends lcontext
-          return lambda(hogan.compile(text).render(lctx))
+          
+          lcontext.lambdaVals[name][lambdaIndexes[name]] = lambda(hogan.compile(text).render(lctx))
+          rtmpl = "{{{ lambdaVals." + name + "." + lambdaIndexes[name] + " }}}"
+          lambdaIndexes[name] = lambdaIndexes[name] + 1
+          return rtmpl
 
   renderPartials partials, opt, (err, partials) ->
     return fn(err) if (err)
