@@ -26,7 +26,7 @@ renderPartials = (partials, opt, fn) ->
   result = {}
   for name, path of partials
     continue unless typeof path is 'string'
-    path += ctx.ext unless $.extname(path) 
+    path += ctx.ext unless $.extname(path)
     path = ctx.lookup(path)
     count++
     read path, opt, ((name, path) ->
@@ -42,7 +42,7 @@ renderPartials = (partials, opt, fn) ->
 
 renderLayout = (path, opt, fn) ->
   return fn(null, false) unless path
-  path += ctx.ext unless $.extname(path) 
+  path += ctx.ext unless $.extname(path)
   path = ctx.lookup(path)
   return fn(null, false) unless path
   read path, opt, (err, str) ->
@@ -88,7 +88,7 @@ render = (path, opt, fn) ->
           lctx = lctx extends opt._locals if opt._locals
           lctx = lctx extends lcontext
           
-          lcontext.lambdaVals[name][lambdaIndexes[name]] = lambda(hogan.compile(text).render(lctx))
+          lcontext.lambdaVals[name][lambdaIndexes[name]] = lambda(hogan.compile(text).render(lctx),lctx)
           rtmpl = "{{{ lambdaVals." + name + "." + lambdaIndexes[name] + " }}}"
           lambdaIndexes[name] = lambdaIndexes[name] + 1
           return rtmpl
