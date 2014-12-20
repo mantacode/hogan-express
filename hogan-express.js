@@ -136,7 +136,7 @@
             lctx = __extends(lctx, opt._locals);
           }
           lctx = __extends(lctx, lcontext);
-          lcontext.lambdaVals[name][lambdaIndexes[name]] = lambda(hogan.compile(text).render(lctx));
+          lcontext.lambdaVals[name][lambdaIndexes[name]] = lambda(hogan.compile(text).render(lctx), lctx);
           rtmpl = "{{{ lambdaVals." + name + "." + lambdaIndexes[name] + " }}}";
           lambdaIndexes[name] = lambdaIndexes[name] + 1;
           return rtmpl;
