@@ -2,12 +2,6 @@
  * Copyright (c) 2012 Andrew Volkov <hello@vol4ok.net>
 ###
 
-$ = {}
-$ extends require 'fs'
-$ extends require 'util'
-$ extends require 'path'
-hogan = require 'hogan.js'
-
 extend = (dest, srcs...) ->
   for src in srcs
     for own k, v of src
@@ -19,6 +13,12 @@ extend = (dest, srcs...) ->
 
 isObj = (obj) ->
   obj.toString() == '[object Object]'
+
+$ = {}
+extend $, require 'fs'
+extend $, require 'util'
+extend $, require 'path'
+hogan = require 'hogan.js'
 
 cache = {}
 ctx = {}
@@ -89,8 +89,8 @@ render = (path, opt, fn) ->
           # it must account for "locals" and values in the current context
           #  ... particually interesting when applying within a list
           lctx= {}
-          lctx = lctx extends opt._locals if opt._locals
-          lctx = lctx extends lcontext
+          lctx = extend lctx, opt._locals if opt._locals
+          lctx = extend lctx, lcontext
           return lambda(hogan.compile(text).render(lctx))
 
   renderPartials partials, opt, (err, partials) ->
