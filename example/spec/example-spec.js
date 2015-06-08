@@ -1,4 +1,3 @@
-var coffeescript = require("coffee-script/register");
 var request = require("supertest");
 var cheerio = require("cheerio");
 var app = require("./../app.coffee");
