@@ -12,7 +12,7 @@ extend = (dest, srcs...) ->
   return dest # Don't leave implicit - returns result of comprehension
 
 isObj = (obj) ->
-  obj?.toString && obj.toString() == '[object Object]'
+  obj && obj.toString && obj.toString() == '[object Object]'
 
 $ = {}
 extend $, require 'fs'

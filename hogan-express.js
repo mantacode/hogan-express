@@ -27,7 +27,7 @@
   };
 
   isObj = function(obj) {
-    return (obj != null ? obj.toString : void 0) && obj.toString() === '[object Object]';
+    return obj && obj.toString && obj.toString() === '[object Object]';
   };
 
   $ = {};
