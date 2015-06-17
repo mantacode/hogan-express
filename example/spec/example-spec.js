@@ -1,6 +1,5 @@
 var request = require("supertest");
 var cheerio = require("cheerio");
-var coffeescript = require("coffee-script");
 var app = require("./../app.coffee");
 var expect = require('expect.js');
 
