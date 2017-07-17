@@ -25,12 +25,10 @@
   },
   "devDependencies": {
     "cheerio": "~0.12.2",
-    "coffee-script": "1.x.x",
     "colors": "0.6.x",
     "expect.js": "~0.2.0",
     "express": "~3.4.0",
     "grunt": "^0.4.5",
-    "grunt-contrib-coffee": "^0.13.0",
     "grunt-mocha-test": "^0.12.7",
     "mocha": "^2.2.5",
     "supertest": "~0.8.0",
