@@ -28,6 +28,7 @@ renderPartials = (partials, opt, fn) ->
     continue unless typeof path is 'string'
     path += ctx.ext unless $.extname(path)
     path = ctx.lookup(path)
+    continue unless typeof path is 'string'
     count++
     read path, opt, ((name, path) ->
         return (err, str) ->
